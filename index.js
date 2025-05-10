@@ -1,13 +1,22 @@
 const express = require('express');
+const mongoose = require("mongoose");
 const app = express();
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.send('Server Runs');
+mongoose.connect("mongodb+srv://Asfandyar:asfandyar123@webdevelopment.qzri4wz.mongodb.net/", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
 });
 
-app.listen(5000, () => {
-    console.log(`Server is running on port: 5000}`);
+mongoose.connection.once("open", () => {
+    console.log("Connected to MongoDB");
+}).on("error", (err) => {
+    console.error("MongoDB connection error:", err);
 });
 
-module.exports = app;
+app.get("/", (req, res) => res.send("Backend running!"));
+
+const PORT = 5000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port: ${PORT}`);
+});
