@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const express = require("express");
 const User = require("../models/user");
 const router = express.Router();
@@ -32,7 +33,7 @@ router.post("/insertMany", async (req, res) => {
     }
 });
 
-router.post("/find", async (req, res) => {
+router.get("/find", async (req, res) => {
     try {
         const { age } = req.body;
         if (!age) {
@@ -61,7 +62,7 @@ router.get("/findOne", async (req, res) => {
     }
 })
 
-router.post("/findLimit", async (req, res) => {
+router.get("/findLimit", async (req, res) => {
     try {
         const { limit } = req.body;
         if (!limit) {
@@ -75,7 +76,7 @@ router.post("/findLimit", async (req, res) => {
     }
 });
 
-router.post("/findSkip", async (req, res) => {
+router.get("/findSkip", async (req, res) => {
     try {
         const { skip } = req.body;
         if (!skip) {
@@ -89,7 +90,7 @@ router.post("/findSkip", async (req, res) => {
     }
 });
 
-router.post("/findSort", async (req, res) => {
+router.get("/findSort", async (req, res) => {
     try {
         const { sort } = req.body;
         if (!sort) {

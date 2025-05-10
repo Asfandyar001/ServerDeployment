@@ -2,8 +2,12 @@ const express = require('express');
 const mongoose = require("mongoose");
 const app = express();
 app.use(express.json());
+const cors = require("cors");
+app.use(cors());
 
-mongoose.connect("mongodb+srv://Asfandyar:asfandyar123@webdevelopment.qzri4wz.mongodb.net/", {
+const userRouter = require("./routes/userRoutes.js");
+
+mongoose.connect("mongodb://localhost:27017/Assignment", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
@@ -15,6 +19,7 @@ mongoose.connection.once("open", () => {
 });
 
 app.get("/", (req, res) => res.send("Backend running!"));
+app.use("/api/user", userRouter);
 
 const PORT = 5000;
 app.listen(PORT, () => {
