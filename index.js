@@ -7,7 +7,7 @@ app.use(cors());
 
 const userRouter = require("./routes/userRoutes.js");
 
-mongoose.connect("mongodb://localhost:27017/Assignment", {
+mongoose.connect("mongodb+srv://Asfandyar:asfandyar123@webdevelopment.qzri4wz.mongodb.net/", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });

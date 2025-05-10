@@ -33,7 +33,7 @@ router.post("/insertMany", async (req, res) => {
     }
 });
 
-router.get("/find", async (req, res) => {
+router.post("/find", async (req, res) => {
     try {
         const { age } = req.body;
         if (!age) {
@@ -48,7 +48,7 @@ router.get("/find", async (req, res) => {
     }
 });
 
-router.get("/findOne", async (req, res) => {
+router.post("/findOne", async (req, res) => {
     try {
         const { name } = req.body;
         if (!name) {
@@ -62,7 +62,7 @@ router.get("/findOne", async (req, res) => {
     }
 })
 
-router.get("/findLimit", async (req, res) => {
+router.post("/findLimit", async (req, res) => {
     try {
         const { limit } = req.body;
         if (!limit) {
@@ -76,7 +76,7 @@ router.get("/findLimit", async (req, res) => {
     }
 });
 
-router.get("/findSkip", async (req, res) => {
+router.post("/findSkip", async (req, res) => {
     try {
         const { skip } = req.body;
         if (!skip) {
@@ -90,21 +90,26 @@ router.get("/findSkip", async (req, res) => {
     }
 });
 
-router.get("/findSort", async (req, res) => {
+router.post("/findSort", async (req, res) => {
     try {
-        const { sort } = req.body;
-        if (!sort) {
+        let { sort } = req.body;
+        if (sort === undefined) {
             return res.status(400).json({ error: "Sort value is required" });
         }
-        const result = await User.collection.find().sort({ age: sort });
+        sort = parseInt(sort);
+        if (![1, -1].includes(sort)) {
+            return res.status(400).json({ error: "Sort value must be either 1 (ascending) or -1 (descending)" });
+        }
+        const result = await User.collection.find().sort({ age: sort }).toArray();
         res.status(200).json(result);
     } catch (error) {
-        console.error("Error in find().Sort()");
+        console.error("Error in findSort()");
         res.status(500).json({ error: error.message });
     }
 });
 
-router.get("/distinct", async (req, res) => {
+
+router.post("/distinct", async (req, res) => {
     try {
         const { field } = req.body;
         if (!field) {
@@ -118,7 +123,7 @@ router.get("/distinct", async (req, res) => {
     }
 });
 
-router.get("/count", async (req, res) => {
+router.post("/count", async (req, res) => {
     try {
         const { active } = req.query;
         const isActive = active === "true";
@@ -174,7 +179,7 @@ router.put("/replaceOne", async (req, res) => {
 
 router.delete("/deleteOne", async (req, res) => {
     try {
-        const { name } = req.body;
+        const { name } = req.query;
         if (!name) {
             return res.status(400).json({ error: "Name is required" });
         }
@@ -188,7 +193,7 @@ router.delete("/deleteOne", async (req, res) => {
 
 router.delete("/deleteMany", async (req, res) => {
     try {
-        const { active } = req.body;
+        const { active } = req.query;
         if (!active) {
             return res.status(400).json({ error: "active status is required" });
         }
@@ -231,7 +236,7 @@ router.post("/createIndex", async (req, res) => {
 
 router.delete("/dropIndex", async (req, res) => {
     try {
-        const { field } = req.body;
+        const { field } = req.query;
         if (!field) {
             return res.status(400).json({ error: "Field is required" });
         }
@@ -269,7 +274,7 @@ router.put("/findOneAndUpdate", async (req, res) => {
 
 router.delete("/findOneAndDelete", async (req, res) => {
     try {
-        const { name } = req.body;
+        const { name } = req.query;
         if (!name) {
             return res.status(400).json({ error: "Name is required" });
         }

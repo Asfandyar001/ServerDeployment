@@ -6,19 +6,19 @@ const routes = [
 
   { method: "POST", path: "/insertMany", body: { users: [{ name: "Ali" }, { name: "Ghaus" }] } },
 
-  { method: "GET", path: "/find", body: { age: 18 } },
+  { method: "POST", path: "/find", body: { age: 18 } },
 
-  { method: "GET", path: "/findOne", body: { name: "Ali" } },
+  { method: "POST", path: "/findOne", body: { name: "Ali" } },
 
-  { method: "GET", path: "/findLimit", body: { limit: 2 } },
+  { method: "POST", path: "/findLimit", body: { limit: 2 } },
 
-  { method: "GET", path: "/findSkip", body: { skip: 1 } },
+  { method: "POST", path: "/findSkip", body: { skip: 1 } },
 
-  { method: "GET", path: "/findSort", body: { sort: -1 } },
+  { method: "POST", path: "/findSort", body: { sort: -1 } },
 
-  { method: "GET", path: "/distinct", body: { field: "name" } },
+  { method: "POST", path: "/distinct", body: { field: "name" } },
 
-  { method: "GET", path: "/count", body: { active: true } },
+  { method: "POST", path: "/count", body: { active: true } },
 
   { method: "PUT", path: "/updateOne", body: { name: "Ahmad", age: 18 } },
 
@@ -40,7 +40,7 @@ const routes = [
 
   { method: "PUT", path: "/findOneAndUpdate", body: { name: "Ahmad", active: true } },
 
-  { method: "PUT", path: "/findOneAndDelete", body: { name: "Ahmad" } },
+  { method: "DELETE", path: "/findOneAndDelete", body: { name: "Ahmad" } },
 
   { method: "POST", path: "/bulkWrite", body: { insertName: "Essa", updateName: "Hassan", updateAge: 20 } },
 
@@ -80,7 +80,7 @@ const App = () => {
         res = await axios[method.toLowerCase()](url, body);
       }
 
-      setResponse(res);
+      setResponse(JSON.stringify(res.data, null, 2));
     } catch (error) {
       setResponse(`Error: ${error.message}`);
     }
@@ -89,7 +89,7 @@ const App = () => {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h2>Test Routes</h2>
+      <h2>MongoDB most commonly used 25 Operation</h2>
 
       <select value={selectedRoute} onChange={handleRouteChange}>
 
