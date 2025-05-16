@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 
 const routes = [
-  { method: "POST", path: "/insertOne", body: { name: "Ali" } },
+  { method: "POST", path: "/insertOne", body: { name: "Ahmad" } },
 
   { method: "POST", path: "/insertMany", body: { users: [{ name: "Ali" }, { name: "Ghaus" }] } },
 
